@@ -1,26 +1,479 @@
 @import "tailwindcss";
 
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --gradient-start: #13202C;
+  --gradient-end: #184D7E;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+  background-attachment: fixed;
+}
+
+.navbar-glass {
+  position: relative;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.navbar-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(90deg, #A3C544, #5B97D0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.navbar-logo {
+  display: inline-flex;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.navbar-logo:hover {
+  transform: scale(1.08) rotate(4deg);
+  filter: drop-shadow(0 0 10px rgba(163, 197, 68, 0.5));
+}
+
+.hero-glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* Entrance animation */
+.hero-fade-in {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.hero-fade-in-active {
+  animation: heroFadeIn 0.7s ease-out forwards;
+}
+
+@keyframes heroFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Maskot idle float - pakai transform, bukan margin (biar gak reflow) */
+.mascot-float {
+  animation: mascotFloat 4s ease-in-out infinite;
+}
+
+@keyframes mascotFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Shadow di bawah maskot */
+.mascot-shadow {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  translate: -50% 0;
+  width: 60%;
+  height: 16px;
+  background: radial-gradient(ellipse, rgba(0,0,0,0.35), transparent 70%);
+  border-radius: 50%;
+  transition: transform 0.2s ease-out;
+  z-index: -1;
+}
+
+/* Klik maskot = lompat squash & stretch */
+.mascot-jump {
+  animation: mascotJump 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes mascotJump {
+  0% { transform: translateY(0) scale(1, 1); }
+  20% { transform: translateY(0) scale(1.1, 0.85); }
+  45% { transform: translateY(-40px) scale(0.95, 1.08); }
+  70% { transform: translateY(0) scale(1.08, 0.92); }
+  100% { transform: translateY(0) scale(1, 1); }
+}
+
+/* Scroll chevron */
+.scroll-chevron {
+  animation: chevronBounce 2s ease-in-out infinite;
+}
+
+@keyframes chevronBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+
+/* Fade transisi dari Hero ke section berikutnya */
+.hero-fade-overlay {
+  position: absolute;
+  top: -800px;
+  left: 0;
+  width: 100%;
+  height: 800px;
+  background: linear-gradient(to bottom, transparent, var(--gradient-start));
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Section Kegiatan - glassmorphism container */
+.kegiatan-glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* Scroll reveal card */
+.kegiatan-card {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
+}
+
+.kegiatan-card-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Base card look + gradient stroke sama kaya navbar */
+.kegiatan-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.kegiatan-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #A3C544, #5B97D0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.kegiatan-card:hover::before {
+  opacity: 1;
+}
+
+.kegiatan-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Efek glossy - sapuan cahaya diagonal pas hover */
+.kegiatan-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.15) 35%,
+    transparent 50%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.7s ease;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.kegiatan-card:hover::after {
+  transform: translateX(100%);
+}
+
+/* Divider yang muncul ke kanan di bawah deskripsi pas hover */
+.kegiatan-divider {
+  margin-top: 12px;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, #A3C544, #5B97D0);
+  transition: width 0.4s ease;
+}
+
+.group:hover .kegiatan-divider {
+  width: 100%;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-fade-in,
+  .hero-fade-in-active,
+  .mascot-float,
+  .mascot-jump,
+  .scroll-chevron,
+  .kegiatan-card {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Nav link - underline dari kiri ke kanan + glow pas hover */
+.nav-link {
+  position: relative;
+  padding-bottom: 4px;
+  text-shadow: 0 0 0px rgba(163, 197, 68, 0);
+  transition: color 0.25s ease, text-shadow 0.25s ease;
+}
+
+.nav-underline {
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, #A3C544, #5B97D0);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  text-shadow: 0 0 12px rgba(163, 197, 68, 0.7);
+}
+
+.nav-link:hover .nav-underline {
+  width: 100%;
+}
+
+/* Menu aktif - underline permanen + glow tetap nyala */
+.nav-link-active {
+  text-shadow: 0 0 10px rgba(163, 197, 68, 0.6);
+}
+
+.nav-link-active .nav-underline {
+  width: 100%;
+  background: linear-gradient(90deg, #A3C544, #A3C544);
+}
+
+/* Loading screen overlay */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+  transition: opacity 0.5s ease;
+}
+
+.loading-overlay-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-logo-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.loading-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Stage: pop-in dengan squash & stretch */
+.loading-logo-in {
+  animation: logoPopIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes logoPopIn {
+  0% { transform: scale(0, 0); opacity: 0; }
+  40% { transform: scale(1.15, 0.8); opacity: 1; }
+  60% { transform: scale(0.9, 1.1); }
+  80% { transform: scale(1.05, 0.96); }
+  100% { transform: scale(1, 1); }
+}
+
+.loading-logo-hold {
+  transform: scale(1, 1);
+  opacity: 1;
+}
+
+/* Stage: pop-out dengan squash & stretch */
+.loading-logo-out {
+  animation: logoPopOut 0.4s cubic-bezier(0.36, 0, 0.66, -0.56) forwards;
+}
+
+@keyframes logoPopOut {
+  0% { transform: scale(1, 1); opacity: 1; }
+  30% { transform: scale(1.15, 0.85); opacity: 1; }
+  100% { transform: scale(0, 0); opacity: 0; }
+}
+
+/* Transisi halus tiap pindah halaman (SPA navigation) */
+.page-transition {
+  animation: pageEnter 0.5s ease-out;
+}
+
+@keyframes pageEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition {
+    animation: none !important;
+  }
+}
+
+/* Footer - glassmorphism, konsisten dengan navbar-glass */
+.footer-glass {
+  position: relative;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+ 
+.footer-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(90deg, #A3C544, #5B97D0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+ 
+
+/* Footer - glassmorphism, konsisten dengan navbar-glass */
+.footer-glass {
+  position: relative;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.footer-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(90deg, #A3C544, #5B97D0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Logo - sedikit hidup pas hover */
+.footer-logo {
+  display: inline-flex;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.footer-logo:hover {
+  transform: scale(1.08) rotate(-4deg);
+  filter: drop-shadow(0 0 10px rgba(163, 197, 68, 0.5));
+}
+
+/* Tombol social icon */
+.footer-social-btn {
+  position: relative;
+  width: 46px;
+  height: 46px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.3s ease, color 0.3s ease, background 0.3s ease,
+    border-color 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  animation: footer-icon-in 0.5s ease forwards;
+}
+
+.footer-social-btn:hover {
+  color: #13202C;
+  background: linear-gradient(135deg, #A3C544, #5B97D0);
+  border-color: transparent;
+  transform: translateY(-4px) scale(1.06);
+  box-shadow: 0 8px 20px rgba(163, 197, 68, 0.35);
+}
+
+.footer-social-btn:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+@keyframes footer-icon-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Divider gradasi - lebarnya ngikutin baris icon di atasnya, bukan full footer */
+.footer-divider {
+  height: 4px;
+  width: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #A3C544, #5B97D0);
+  box-shadow: 0 0 8px rgba(163, 197, 68, 0.5);
+  mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
+  opacity: 0.45;
+  transition: opacity 0.3s ease, box-shadow 0.3s ease;
+}
+
+.footer-glass:hover .footer-divider {
+  opacity: 0.75;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-logo,
+  .footer-social-btn {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
