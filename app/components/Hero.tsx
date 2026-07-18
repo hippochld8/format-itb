@@ -69,19 +69,19 @@ export default function Hero() {
           {/* Text - kiri */}
           <div className="flex flex-col gap-10 text-left md:text-left">
             <h1
-              className={`text-3xl md:text-8xl font-bold text-white hero-fade-in ${mounted ? "hero-fade-in-active" : ""}`}
+              className={`text-6xl text-center md:text-left md:text-8xl font-bold text-white hero-fade-in ${mounted ? "hero-fade-in-active" : ""}`}
               style={{ animationDelay: "0ms" }}
             >
               Wilujeng Sumping!
             </h1>
             <h2
-              className={`text-xl md:text-4xl font-semibold text-white/90 hero-fade-in ${mounted ? "hero-fade-in-active" : ""}`}
+              className={`text-4xl text-center md:text-left md:text-6xl font-semibold text-white/90 hero-fade-in ${mounted ? "hero-fade-in-active" : ""}`}
               style={{ animationDelay: "120ms" }}
             >
               Forum Mahasiswa Garut ITB
             </h2>
             <p
-              className={`text-sm md:text-2xl text-white/70 italic hero-fade-in ${mounted ? "hero-fade-in-active" : ""}`}
+              className={`text-lg text-center md:text-left md:text-2xl text-white/70 italic hero-fade-in ${mounted ? "hero-fade-in-active" : ""}`}
               style={{ animationDelay: "240ms" }}
             >
               Niti Harti Surti Tur Mukti
@@ -89,7 +89,7 @@ export default function Hero() {
 
             <button
               onClick={scrollToNext}
-              className={`mt-4 self-center md:self-start px-6 py-3 rounded-full font-medium text-[#13202C] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_24px_rgba(163,197,68,0.5)] hero-fade-in ${mounted ? "hero-fade-in-active" : ""}`}
+              className={`mt-0  self-center md:self-start px-6 py-3 rounded-full font-medium text-[#13202C] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_24px_rgba(163,197,68,0.5)] hero-fade-in ${mounted ? "hero-fade-in-active" : ""}`}
               style={{ backgroundColor: "#A3C544", animationDelay: "360ms" }}
             >
               Ayo Mulai Petualangan!
