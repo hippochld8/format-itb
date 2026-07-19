@@ -55,7 +55,7 @@ export default function Kegiatan() {
 
       <div
         ref={sectionRef}
-        className="kegiatan-glass mx-auto rounded-3xl px-8 py-6 md:px-14 md:py-8"
+        className="mx-auto rounded-3xl px-8 py-6 md:px-14 md:py-8"
       >
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-5xl font-bold text-white">
@@ -66,7 +66,7 @@ export default function Kegiatan() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {kegiatanList.map((item, i) => (
             <div
               key={item.id}

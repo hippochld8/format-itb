@@ -10,7 +10,7 @@ const menuItems = [
   { label: "Beranda", href: "/" },
   { label: "Kegiatan", href: "/kegiatan" },
   { label: "Galeri", href: "/galeri" },
-  { label: "Produk", href: "/produk" },
+  { label: "Cinta Lokal", href: "/cilok" },
   { label: "Tentang Kami", href: "/tentang-kami" },
 ];
 

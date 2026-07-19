@@ -539,3 +539,626 @@ body {
     transition: none !important;
   }
 }
+
+.kabinet-glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.kabinet-panel {
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: background 0.35s ease;
+}
+
+@media (min-width: 768px) {
+  .kabinet-panel {
+    padding: 3.5rem 3.5rem;
+  }
+}
+
+.kabinet-panel:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.kabinet-eyebrow {
+  display: inline-block;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #A3C544;
+  opacity: 0.85;
+}
+
+.kabinet-col {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.kabinet-visible .kabinet-col {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.kabinet-visible .kabinet-col:nth-child(3) {
+  transition-delay: 0.15s;
+}
+
+/* Divider */
+.kabinet-divider {
+  height: 4px;
+  width: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #A3C544, #5B97D0);
+  box-shadow: 0 0 8px rgba(163, 197, 68, 0.5);
+  mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
+  opacity: 0.45;
+  transition: opacity 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .kabinet-divider {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 84%;
+    background: linear-gradient(180deg, #A3C544, #5B97D0);
+    mask-image: linear-gradient(180deg, transparent, black 15%, black 85%, transparent);
+    -webkit-mask-image: linear-gradient(180deg, transparent, black 15%, black 85%, transparent);
+  }
+
+  /* Nyala lebih terang di sisi yang di-hover */
+  .kabinet-divider-left {
+    background: linear-gradient(180deg, #A3C544, rgba(91, 151, 208, 0.3));
+    opacity: 0.9;
+    box-shadow: 0 0 16px rgba(163, 197, 68, 0.6);
+  }
+
+  .kabinet-divider-right {
+    background: linear-gradient(180deg, rgba(163, 197, 68, 0.3), #5B97D0);
+    opacity: 0.9;
+    box-shadow: 0 0 16px rgba(91, 151, 208, 0.6);
+  }
+}
+
+/* Logo micro-interaction */
+.kabinet-logo {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.kabinet-panel:hover .kabinet-logo {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 10px rgba(163, 197, 68, 0.5));
+}
+
+/* Pull quote di kolom kiri */
+.kabinet-quote {
+  margin: 1.25rem 0;
+  padding: 0.9rem 1.1rem;
+  border-left: 3px solid #A3C544;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 0 0.5rem 0.5rem 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+/* Poin filosofi logo di kolom kanan */
+.kabinet-point {
+  padding: 0.9rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.kabinet-point:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.kabinet-point-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #A3C544;
+}
+
+.cilok-tag {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  border: 1px solid rgba(163, 197, 68, 0.4);
+  color: #A3C544;
+}
+
+.cilok-gallery-item {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cilok-callout {
+  padding: 1.1rem 1.4rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, rgba(163, 197, 68, 0.15), rgba(91, 151, 208, 0.1));
+  border-left: 3px solid #A3C544;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.cilok-quote-block {
+  padding: 1.2rem 1.4rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cilok-quote-speaker {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #5B97D0;
+}
+
+.cilok-quote-bubble {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 0.9rem;
+  padding: 0.8rem 1.1rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.cilok-list-title {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #A3C544, #5B97D0);
+  color: #13202C;
+}
+
+.cilok-list {
+  list-style: decimal;
+  padding-left: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.cilok-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.25s ease, gap 0.25s ease;
+}
+
+.cilok-back-link:hover {
+  color: #A3C544;
+  gap: 12px;
+}
+
+.cilok-detail-hero {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.cilok-detail-glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.cilok-scroll {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 4px;
+  scroll-behavior: smooth;
+}
+
+.cilok-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.cilok-card {
+  scroll-snap-align: start;
+  width: 260px;
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .cilok-card {
+    width: 280px;
+  }
+}
+
+.cilok-nav-btn {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(19, 32, 44, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: white;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+}
+
+.cilok-nav-btn:hover {
+  background: rgba(163, 197, 68, 0.3);
+  border-color: rgba(163, 197, 68, 0.5);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.cilok-nav-btn-left {
+  left: -14px;
+}
+
+.cilok-nav-btn-right {
+  right: -14px;
+}
+
+.cilok-card {
+  scroll-snap-align: start;
+  width: 260px;
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .cilok-card {
+    width: 280px;
+  }
+}
+
+/* Sidebar galeri */
+.galeri-sidebar-eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #A3C544;
+}
+
+.galeri-sidebar-hint {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.galeri-sidebar-link {
+  text-align: left;
+  padding: 12px 0 12px 16px;
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+  transition: color 0.25s ease, border-color 0.25s ease, padding-left 0.25s ease;
+}
+
+.galeri-sidebar-link:hover {
+  color: rgba(255, 255, 255, 0.9);
+  padding-left: 20px;
+}
+
+.galeri-sidebar-link-active {
+  color: white;
+  font-weight: 600;
+  border-left: 2px solid #A3C544;
+  padding-left: 20px;
+}
+
+/* Album number + divider */
+.galeri-album-number {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #5B97D0;
+}
+
+.galeri-divider {
+  height: 1px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 20px 0 28px 0;
+}
+
+/* Thumbnail */
+.galeri-thumb {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+}
+
+.galeri-thumb:hover {
+  transform: translateY(-4px);
+  border-color: rgba(163, 197, 68, 0.5);
+}
+
+/* Lightbox */
+.galeri-lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(19, 32, 44, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5vw;
+  animation: lightboxFadeIn 0.25s ease;
+}
+
+@keyframes lightboxFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.galeri-lightbox-img {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 1rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: lightboxZoomIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes lightboxZoomIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.galeri-lightbox-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.galeri-lightbox-close:hover {
+  background: rgba(163, 197, 68, 0.3);
+  transform: scale(1.08) rotate(90deg);
+}
+
+/* Foto placeholder kata pengantar ketua */
+.ketua-photo-placeholder {
+  width: 96px;
+  height: 96px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.org-node {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 0.85rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  width: 100%;
+  max-width: 96px;
+}
+
+.org-node:hover {
+  transform: translateY(-3px);
+  border-color: rgba(163, 197, 68, 0.6);
+  background: rgba(163, 197, 68, 0.1);
+}
+
+.org-node-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.5);
+  flex-shrink: 0;
+}
+
+.org-node-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.15;
+  text-align: left;
+  min-width: 0;
+}
+
+.org-node-role {
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: white;
+}
+
+.org-node-name {
+  font-size: 0.54rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+@media (min-width: 768px) {
+  .org-node {
+    padding: 8px 10px;
+    max-width: 128px;
+    gap: 8px;
+  }
+  .org-node-avatar {
+    width: 24px;
+    height: 24px;
+  }
+  .org-node-role {
+    font-size: 0.72rem;
+  }
+  .org-node-name {
+    font-size: 0.62rem;
+  }
+}
+
+/* Fondasi org-tree - WAJIB ADA, ini yang bikin struktur bertingkat + garis presisi */
+.org-tree,
+.org-tree ul,
+.org-tree li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.org-tree-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.org-tree {
+  display: table;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.org-tree ul {
+  display: table;
+}
+
+.org-tree li {
+  display: table-cell;
+  padding: 20px 3px 0 3px;
+  vertical-align: top;
+}
+
+@media (min-width: 768px) {
+  .org-tree li {
+    padding: 28px 5px 0 5px;
+  }
+}
+
+.org-tree li::before,
+.org-tree li::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 50%;
+  width: 50%;
+  height: 32px;
+  border-top: 2px solid rgba(163, 197, 68, 0.5);
+}
+
+.org-tree li::after {
+  right: auto;
+  left: 50%;
+  border-left: 2px solid rgba(163, 197, 68, 0.5);
+}
+
+.org-tree li:only-child::after,
+.org-tree li:only-child::before {
+  display: none;
+}
+
+.org-tree li:only-child {
+  padding-top: 0;
+}
+
+.org-tree li:first-child::before,
+.org-tree li:last-child::after {
+  border: 0 none;
+}
+
+.org-tree li:last-child::before {
+  border-right: 2px solid rgba(163, 197, 68, 0.5);
+}
+
+.org-tree ul::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 32px;
+  border-left: 2px solid rgba(163, 197, 68, 0.5);
+}
+
+/* Modal detail jabatan */
+.org-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(19, 32, 44, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: lightboxFadeIn 0.25s ease;
+}
+
+.org-modal-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1.5rem;
+  padding: 32px 40px;
+  min-width: 260px;
+  animation: lightboxZoomIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.org-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  transition: background 0.25s ease;
+}
+
+.org-modal-close:hover {
+  background: rgba(163, 197, 68, 0.3);
+}
