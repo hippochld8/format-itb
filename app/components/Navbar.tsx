@@ -68,7 +68,7 @@ export default function Navbar() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className={`nav-link text-l font-medium transition-colors ${
+                    className={`nav-link text-lg font-medium transition-colors ${
                       isActive ? "text-[#A3C544] nav-link-active" : "text-white/90 hover:text-white"
                     }`}
                   >
