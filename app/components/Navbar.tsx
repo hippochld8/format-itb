@@ -4,13 +4,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { Search, Menu, X } from "lucide-react";
+import { Search, Menu, X, ChevronDown } from "lucide-react";
+
+const programSubmenu = [
+  { label: "Akademik", href: "/program/akademik" },
+  { label: "Beasiswa", href: "/program/beasiswa" },
+  { label: "Cinta Lokal", href: "/cilok" },
+  { label: "Konsultasi", href: "/program/konsultasi" },
+];
 
 const menuItems = [
   { label: "Beranda", href: "/" },
   { label: "Kegiatan", href: "/kegiatan" },
   { label: "Galeri", href: "/galeri" },
-  { label: "Cinta Lokal", href: "/cilok" },
+  { label: "Program", href: "/program", submenu: programSubmenu },
+  { label: "Merch", href: "/merch" },
   { label: "Tentang Kami", href: "/tentang-kami" },
 ];
 
@@ -49,7 +57,15 @@ const socialLinks = [
 export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [programOpen, setProgramOpen] = useState(false);
+  const [mobileProgramOpen, setMobileProgramOpen] = useState(false);
   const pathname = usePathname();
+
+  const isProgramActive =
+    pathname === "/program" ||
+    pathname.startsWith("/program/") ||
+    pathname === "/cilok" ||
+    pathname.startsWith("/cilok/");
 
   return (
     <>
@@ -64,6 +80,44 @@ export default function Navbar() {
           <ul className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
             {menuItems.map((item) => {
               const isActive = pathname === item.href;
+
+              if (item.submenu) {
+                return (
+                  <li
+                    key={item.href}
+                    className="relative"
+                    onMouseEnter={() => setProgramOpen(true)}
+                    onMouseLeave={() => setProgramOpen(false)}
+                  >
+                    <Link
+                      href={item.href}
+                      className={`nav-link flex items-center gap-1 text-lg font-medium transition-colors ${
+                        isProgramActive ? "text-[#A3C544] nav-link-active" : "text-white/90 hover:text-white"
+                      }`}
+                    >
+                      {item.label}
+                      <ChevronDown
+                        size={14}
+                        className={`transition-transform duration-200 ${programOpen ? "rotate-180" : ""}`}
+                      />
+                      <span className="nav-underline" />
+                    </Link>
+
+                    <div className={`nav-dropdown ${programOpen ? "nav-dropdown-open" : ""}`}>
+                      {item.submenu.map((sub) => (
+                        <Link
+                          key={sub.href}
+                          href={sub.href}
+                          className={`nav-dropdown-link ${pathname === sub.href ? "nav-dropdown-link-active" : ""}`}
+                        >
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </li>
+                );
+              }
+
               return (
                 <li key={item.href}>
                   <Link
@@ -127,6 +181,42 @@ export default function Navbar() {
         <ul className="flex flex-col gap-1 px-4 mt-8">
           {menuItems.map((item) => {
             const isActive = pathname === item.href;
+
+            if (item.submenu) {
+              return (
+                <li key={item.href}>
+                  <button
+                    onClick={() => setMobileProgramOpen(!mobileProgramOpen)}
+                    aria-expanded={mobileProgramOpen}
+                    className={`w-full flex items-center justify-between py-3 px-3 rounded-xl text-xl font-medium transition-colors ${
+                      isProgramActive ? "text-[#A3C544]" : "text-white/90 hover:text-white"
+                    }`}
+                  >
+                    {item.label}
+                    <ChevronDown
+                      size={18}
+                      className={`transition-transform duration-200 ${mobileProgramOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+
+                  <div className={`mobile-submenu ${mobileProgramOpen ? "mobile-submenu-open" : ""}`}>
+                    {item.submenu.map((sub) => (
+                      <Link
+                        key={sub.href}
+                        href={sub.href}
+                        onClick={() => setMenuOpen(false)}
+                        className={`block py-2.5 px-3 rounded-lg text-base transition-colors ${
+                          pathname === sub.href ? "text-[#A3C544]" : "text-white/70 hover:text-white"
+                        }`}
+                      >
+                        {sub.label}
+                      </Link>
+                    ))}
+                  </div>
+                </li>
+              );
+            }
+
             return (
               <li key={item.href}>
                 <Link

@@ -238,6 +238,8 @@ body {
 /* Nav link - underline dari kiri ke kanan + glow pas hover */
 .nav-link {
   position: relative;
+  display: inline-flex;
+  align-items: center;
   padding-bottom: 4px;
   text-shadow: 0 0 0px rgba(163, 197, 68, 0);
   transition: color 0.25s ease, text-shadow 0.25s ease;
@@ -1161,4 +1163,682 @@ body {
 
 .org-modal-close:hover {
   background: rgba(163, 197, 68, 0.3);
+}
+
+/* Dropdown submenu Program - desktop */
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  min-width: 180px;
+  padding: 8px;
+  border-radius: 1rem;
+  background: rgba(19, 32, 44, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+}
+
+.nav-dropdown::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 0;
+  right: 0;
+  height: 14px;
+}
+
+.nav-dropdown-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.nav-dropdown-link {
+  padding: 10px 14px;
+  border-radius: 0.6rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
+  transition: background 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-dropdown-link:hover {
+  background: rgba(163, 197, 68, 0.15);
+  color: white;
+}
+
+.nav-dropdown-link-active {
+  color: #A3C544;
+  font-weight: 600;
+  background: rgba(163, 197, 68, 0.1);
+}
+
+/* Submenu Program - mobile (accordion) */
+.mobile-submenu {
+  max-height: 0;
+  overflow: hidden;
+  padding-left: 12px;
+  transition: max-height 0.3s ease;
+}
+
+.mobile-submenu-open {
+  max-height: 260px;
+}
+
+/* Card matkul di listing */
+.akademik-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.akademik-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(163, 197, 68, 0.5);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+.akademik-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, rgba(163, 197, 68, 0.25), rgba(91, 151, 208, 0.2));
+  color: #A3C544;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.akademik-card-cta {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 0.8rem;
+  color: #5B97D0;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.akademik-card:hover .akademik-card-cta {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Accordion bab */
+.akademik-accordion {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.9rem;
+  overflow: hidden;
+}
+
+.akademik-accordion-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.akademik-accordion-header:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.akademik-accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.akademik-accordion-body-open {
+  max-height: 100px;
+}
+
+.akademik-drive-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 18px 14px 18px;
+  padding: 8px 14px;
+  border-radius: 0.6rem;
+  background: rgba(163, 197, 68, 0.12);
+  color: #A3C544;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.akademik-drive-link:hover {
+  background: rgba(163, 197, 68, 0.22);
+}
+
+/* Tutor card */
+.akademik-tutor-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Filter buttons */
+.beasiswa-filter-btn {
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.6);
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.beasiswa-filter-btn:hover {
+  border-color: rgba(163, 197, 68, 0.4);
+  color: white;
+}
+
+.beasiswa-filter-btn-active {
+  background: #A3C544;
+  border-color: #A3C544;
+  color: #13202C;
+  font-weight: 600;
+}
+
+/* Card beasiswa */
+.beasiswa-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 26px;
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.beasiswa-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.beasiswa-card-tutup {
+  opacity: 0.55;
+}
+
+.beasiswa-card-segera-tutup {
+  border-color: rgba(230, 180, 60, 0.4);
+}
+
+/* Status badge */
+.beasiswa-status-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.beasiswa-status-buka {
+  background: rgba(163, 197, 68, 0.18);
+  color: #A3C544;
+}
+
+.beasiswa-status-segera-tutup {
+  background: rgba(230, 180, 60, 0.18);
+  color: #e6b43c;
+}
+
+.beasiswa-status-tutup {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* CTA button */
+.beasiswa-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  background: #A3C544;
+  color: #13202C;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.beasiswa-cta-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(163, 197, 68, 0.4);
+}
+
+/* Topik konsultasi */
+.konsultasi-topik-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 0.8rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.88rem;
+}
+
+/* Card konselor */
+.konselor-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.konselor-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(163, 197, 68, 0.4);
+}
+
+.konselor-card .ketua-photo-placeholder {
+  width: 56px;
+  height: 56px;
+}
+
+.konselor-wa-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #A3C544;
+  color: #13202C;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.konselor-wa-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 16px rgba(163, 197, 68, 0.4);
+}
+
+/* Product card */
+.merch-product-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.25rem;
+  padding: 16px;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.merch-product-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(163, 197, 68, 0.4);
+}
+
+.merch-size-btn {
+  padding: 4px 10px;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.72rem;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.merch-size-btn-active {
+  border-color: #A3C544;
+  background: rgba(163, 197, 68, 0.15);
+  color: #A3C544;
+  font-weight: 600;
+}
+
+.merch-add-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 0.75rem;
+  background: #A3C544;
+  color: #13202C;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.merch-add-btn:hover:not(:disabled) {
+  transform: scale(1.02);
+}
+
+.merch-add-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Floating cart button */
+.merch-cart-fab {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 60;
+  width: 56px;
+  height: 56px;
+  border-radius: 9999px;
+  background: #A3C544;
+  color: #13202C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(163, 197, 68, 0.4);
+  transition: transform 0.25s ease;
+}
+
+.merch-cart-fab:hover {
+  transform: scale(1.08);
+}
+
+.merch-cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  background: #13202C;
+  color: white;
+  font-size: 0.68rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #A3C544;
+}
+
+/* Drawer & modal overlay */
+.merch-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(19, 32, 44, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: flex-end;
+  animation: lightboxFadeIn 0.25s ease;
+}
+
+.merch-drawer {
+  width: 100%;
+  max-width: 420px;
+  height: 100%;
+  background: rgba(19, 32, 44, 0.97);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 28px 22px;
+  display: flex;
+  flex-direction: column;
+  animation: merchSlideIn 0.3s ease;
+}
+
+@keyframes merchSlideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.merch-cart-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.merch-cart-item-img {
+  width: 52px;
+  height: 52px;
+  border-radius: 0.6rem;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.merch-qty-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: background 0.2s ease;
+}
+
+.merch-qty-btn:hover {
+  background: rgba(163, 197, 68, 0.2);
+}
+
+.merch-remove-btn {
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.2s ease;
+}
+
+.merch-remove-btn:hover {
+  color: #e06666;
+}
+
+.merch-checkout-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border-radius: 0.9rem;
+  background: #A3C544;
+  color: #13202C;
+  font-weight: 700;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.merch-checkout-btn:hover {
+  transform: scale(1.02);
+}
+
+.merch-checkout-btn-disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Checkout modal */
+.merch-checkout-modal {
+  margin: auto;
+  width: 100%;
+  max-width: 460px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: rgba(19, 32, 44, 0.97);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1.5rem;
+  padding: 28px;
+}
+
+.merch-form-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 6px;
+}
+
+.merch-form-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 0.88rem;
+  transition: border-color 0.2s ease;
+}
+
+.merch-form-input:focus {
+  outline: none;
+  border-color: #A3C544;
+}
+
+.merch-method-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8rem;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.merch-method-btn-active {
+  border-color: #A3C544;
+  background: rgba(163, 197, 68, 0.12);
+  color: #A3C544;
+  font-weight: 600;
+}
+
+.merch-qris-box {
+  padding: 18px;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.merch-qris-img {
+  width: 100%;
+  max-width: 220px;
+  aspect-ratio: 1;
+  object-fit: contain;
+  margin: 0 auto;
+  display: block;
+  background: white;
+  border-radius: 0.6rem;
+  padding: 8px;
+}
+
+.merch-zone-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.82rem;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.merch-zone-btn-active {
+  border-color: #A3C544;
+  background: rgba(163, 197, 68, 0.12);
+  color: #A3C544;
+  font-weight: 600;
+}
+
+/* Berita & Agenda */
+.berita-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.berita-item.kegiatan-card-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.berita-item:hover {
+  border-color: rgba(163, 197, 68, 0.4);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.berita-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.berita-icon-cilok {
+  background: rgba(91, 151, 208, 0.18);
+  color: #5B97D0;
+}
+
+.berita-icon-beasiswa {
+  background: rgba(163, 197, 68, 0.18);
+  color: #A3C544;
+}
+
+/* Jelajahi FORMAT */
+.jelajahi-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.jelajahi-card.kegiatan-card-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.jelajahi-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(163, 197, 68, 0.5);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.jelajahi-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(163, 197, 68, 0.2), rgba(91, 151, 208, 0.15));
+  color: #A3C544;
 }
