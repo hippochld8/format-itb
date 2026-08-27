@@ -1198,19 +1198,46 @@ body {
 }
 
 .nav-dropdown-open {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
-}
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Dropdown akun: rata kanan, sejajar sisi kanan navbar */
+  .nav-dropdown-account,
+  .nav-dropdown-account.nav-dropdown-open {
+    left: auto;
+    right: -24px;
+    transform: translateX(0) translateY(-8px);
+  }
+
+  .nav-dropdown-account.nav-dropdown-open {
+    transform: translateX(0) translateY(0);
+  }
+
+  /* Panah kecil di bawah avatar */
+  .nav-dropdown-account::after {
+    content: "";
+    position: absolute;
+    top: -6px;
+    right: 36px;
+    width: 12px;
+    height: 12px;
+    transform: rotate(45deg);
+    border-radius: 2px;
+    background: rgba(19, 32, 44, 0.9);
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
 
 .nav-dropdown-link {
-  padding: 10px 14px;
-  border-radius: 0.6rem;
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.75);
-  transition: background 0.2s ease, color 0.2s ease;
-  white-space: nowrap;
+    padding: 10px 14px;
+    border-radius: 0.6rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.75);
+    transition: background 0.2s ease, color 0.2s ease;
+    white-space: nowrap;
 }
 
 .nav-dropdown-link:hover {
@@ -1841,4 +1868,20 @@ body {
   justify-content: center;
   background: linear-gradient(135deg, rgba(163, 197, 68, 0.2), rgba(91, 151, 208, 0.15));
   color: #A3C544;
+}
+
+/* Animasi masuk untuk halaman auth */
+@keyframes auth-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.auth-enter {
+  animation: auth-enter 0.45s ease-out both;
 }

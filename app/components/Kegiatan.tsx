@@ -3,34 +3,14 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
-const kegiatanList = [
-  {
-    id: 1,
-    title: "Ganesha Untuk Garut",
-    description: "Roadshow pengenalan ITB ke sekolah-sekolah di Garut, jembatan mimpi adik-adik menuju kampus.",
-    image: "gantar.jpg",
-  },
-  {
-    id: 2,
-    title: "Malam Keakraban",
-    description: "Ruang untuk mempererat kekeluargaan antar anggota FORMAT lintas angkatan. Biasanya diadakan setelah Gantar.",
-    image: "makrab.jpg",
-  },
-  {
-    id: 3,
-    title: "Welcoming Party!",
-    description: "Penyambutan mahasiswa Garut di ITB yang baru setiap tahun ajaran baru. Berisi pengenalan mengenai FORMAT ITB",
-    image: "welpar.jpg",
-  },
-  {
-    id: 4,
-    title: "Syukuran Wisuda",
-    description: "Acara syukuran setelah ada mahasiswa Garut di ITB wisuda. Biasanya diadakan setiap bulan April dan Oktober.",
-    image: "syukwis.jpg",
-  },
-];
+type KegiatanItem = {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+};
 
-export default function Kegiatan() {
+export default function Kegiatan({ kegiatanList }: { kegiatanList: KegiatanItem[] }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 

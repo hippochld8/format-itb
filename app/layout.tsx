@@ -1,8 +1,7 @@
 import "./globals.css";
-import Navbar from "./components/Navbar";
-import LoadingScreen from "./components/LoadingScreen";
-import PageTransition from "./components/PageTransition";
-import Footer from "./components/Footer";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { extractRouterConfig } from "uploadthing/server";
+import { ourFileRouter } from "./api/uploadthing/core";
 
 export default function RootLayout({
   children,
@@ -12,12 +11,8 @@ export default function RootLayout({
   return (
     <html lang="id">
       <body>
-        <LoadingScreen />
-        <Navbar />
-        <main className="relative -top-16">
-          <PageTransition>{children}</PageTransition>
-        </main>
-        <Footer />
+        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+        {children}
       </body>
     </html>
   );

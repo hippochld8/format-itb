@@ -1,3 +1,5 @@
+import { img } from "./images";
+
 export type ArticleSection =
   | { type: "paragraph"; text: string }
   | { type: "gallery"; images: string[] }
@@ -20,7 +22,7 @@ export const cintaLokalList: CintaLokalArticle[] = [
     slug: "penca-oray",
     title: "Penca Oray",
     excerpt: "Atraksi silat khas Garut yang memadukan jurus penca dengan oray (ular) liar bawaan pemain.",
-    image: "penca_oray.jpg",
+    image: img("penca_oray.jpg"),
     date: "37 minggu lalu",
     tags: ["CiLok", "CintaLokal"],
     sections: [
@@ -30,7 +32,7 @@ export const cintaLokalList: CintaLokalArticle[] = [
       },
       {
         type: "gallery",
-        images: ["penca_oray_1.jpg", "penca_oray_2.jpg", "penca_oray_3.jpg"],
+        images: [img("penca_oray_1.jpg"), img("penca_oray_2.jpg"), img("penca_oray_3.jpg")],
       },
       {
         type: "paragraph",
@@ -50,7 +52,7 @@ export const cintaLokalList: CintaLokalArticle[] = [
     slug: "kampung-pulo",
     title: "Kampung Pulo",
     excerpt: "Kampung adat di pulau kecil tengah Situ Cangkuang yang menjaga tata ruang dan tradisi leluhur.",
-    image: "kampung_pulo.jpeg",
+    image: img("kampung_pulo.jpeg"),
     date: "32 minggu lalu",
     tags: ["CiLok", "CintaLokal"],
     sections: [
@@ -60,7 +62,7 @@ export const cintaLokalList: CintaLokalArticle[] = [
       },
       {
         type: "gallery",
-        images: ["kampung_pulo_1.jpg", "kampung_pulo_2.jpg", "kampung_pulo_3.jpg"],
+        images: [img("kampung_pulo_1.jpg"), img("kampung_pulo_2.jpg"), img("kampung_pulo_3.jpg")],
       },
       {
         type: "paragraph",
@@ -87,7 +89,7 @@ export const cintaLokalList: CintaLokalArticle[] = [
     slug: "burayot",
     title: "Burayot",
     excerpt: "Kudapan tradisional Garut berbahan tepung beras dan gula merah, bentuknya menggantung khas dari Leles.",
-    image: "burayot.jpg",
+    image: img("burayot.jpg"),
     date: "33 minggu lalu",
     tags: ["CiLok", "CintaLokal"],
     sections: [
@@ -97,7 +99,7 @@ export const cintaLokalList: CintaLokalArticle[] = [
       },
       {
         type: "gallery",
-        images: ["burayot_1.jpg", "burayot_2.jpg", "burayot_3.jpg"],
+        images: [img("burayot_1.jpg"), img("burayot_2.jpg"), img("burayot_3.jpg")],
       },
       {
         type: "paragraph",
@@ -117,7 +119,7 @@ export const cintaLokalList: CintaLokalArticle[] = [
     slug: "kabijakan-pemkab-garut-asn-angkot",
     title: "Kabijakan Pemkab Garut: ASN Wajib Naek Angkutan Umum",
     excerpt: "Kebijakan ASN Garut wajib naik angkutan umum tiap Senin & Jumat untuk kurangi kemacetan dan dukung ekonomi angkot.",
-    image: "pemkab.jpg",
+    image: img("pemkab.jpg"),
     date: "31 minggu lalu",
     tags: ["CiLok", "CintaLokal"],
     sections: [

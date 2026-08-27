@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { img } from "@/lib/images";
 
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null);
@@ -62,7 +63,7 @@ export default function Hero() {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className="relative top-0 w-full min-h-screen bg-cover bg-center bg-no-repeat overflow-hidden"
-      style={{ backgroundImage: "url(/hero_format.png)" }}
+      style={{ backgroundImage: `url(${img("hero_format.png")})` }}
     >
       <div className="relative z-10 flex items-center min-h-screen px-6 md:px-16 pt-16">
         <div className="w-full mx-auto rounded-3xl px-8 py-10 md:px-14 md:py-14 flex flex-col md:flex-row items-center justify-between gap-8">
@@ -112,7 +113,7 @@ export default function Hero() {
             <div className="mascot-float">
               {/* Img ini yang megang tilt dari mouse (JS only) */}
               <img
-                src="/maskot.png"
+                src={img("maskot.png")}
                 alt="Maskot FORMAT ITB"
                 onClick={handleMascotClick}
                 onMouseEnter={() => setIsHovering(true)}

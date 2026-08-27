@@ -4,7 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { Search, Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, LayoutDashboard, LogOut, LogIn } from "lucide-react";
+import { useSession, signOut } from "@/lib/auth-client";
+import { isAdminRole, type Role } from "@/lib/permissions";
 
 const programSubmenu = [
   { label: "Akademik", href: "/program/akademik" },
@@ -55,7 +57,8 @@ const socialLinks = [
 ];
 
 export default function Navbar() {
-  const [searchOpen, setSearchOpen] = useState(false);
+  const { data: session, isPending } = useSession();
+  const [accountOpen, setAccountOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [programOpen, setProgramOpen] = useState(false);
   const [mobileProgramOpen, setMobileProgramOpen] = useState(false);
@@ -66,6 +69,70 @@ export default function Navbar() {
     pathname.startsWith("/program/") ||
     pathname === "/cilok" ||
     pathname.startsWith("/cilok/");
+
+  const isAdmin = isAdminRole((session?.user.role as Role) ?? undefined);
+
+  const accountButton = isPending ? (
+    <span className="shrink-0 w-9 h-9 rounded-full bg-white/10 animate-pulse" />
+  ) : session ? (
+    <div className="relative">
+      <button
+        onClick={() => setAccountOpen((v) => !v)}
+        aria-label="Menu akun"
+        className="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-full overflow-hidden ring-2 ring-white/20 hover:ring-[#A3C544] transition-all"
+      >
+        {session.user.image ? (
+          <img
+            src={session.user.image}
+            alt={session.user.name}
+            className="block w-full h-full object-cover"
+          />
+        ) : (
+          <span className="w-full h-full flex items-center justify-center text-sm font-bold text-[#13202C]"
+            style={{ backgroundColor: "#A3C544" }}
+          >
+            {session.user.name?.[0]?.toUpperCase() ?? "U"}
+          </span>
+        )}
+      </button>
+
+      <div className={`nav-dropdown nav-dropdown-account ${accountOpen ? "nav-dropdown-open" : ""}`}>
+        <div className="px-5 py-4 border-b border-white/10">
+          <p className="text-white font-semibold text-sm truncate">{session.user.name}</p>
+          <p className="text-white/50 text-xs truncate mt-0.5">{session.user.email}</p>
+        </div>
+        {isAdmin && (
+          <Link
+            href="/dashboard"
+            onClick={() => setAccountOpen(false)}
+            className="nav-dropdown-link flex items-center gap-2 text-sm"
+          >
+            <LayoutDashboard size={15} />
+            Dashboard
+          </Link>
+        )}
+        <button
+          onClick={() => {
+            setAccountOpen(false);
+            signOut();
+          }}
+          className="w-full nav-dropdown-link flex items-center gap-2 text-sm"
+        >
+          <LogOut size={15} />
+          Keluar
+        </button>
+      </div>
+    </div>
+  ) : (
+    <Link
+      href={`/auth/sign-in?redirect=${encodeURIComponent(pathname)}`}
+      className="shrink-0 inline-flex items-center gap-1.5 px-4 h-9 rounded-full text-sm font-semibold text-[#13202C] hover:scale-105 transition-transform"
+      style={{ backgroundColor: "#A3C544" }}
+    >
+      <LogIn size={15} />
+      Masuk
+    </Link>
+  );
 
   return (
     <>
@@ -91,7 +158,7 @@ export default function Navbar() {
                   >
                     <Link
                       href={item.href}
-                      className={`nav-link flex items-center gap-1 text-lg font-medium transition-colors ${
+                      className={`nav-link flex items-center gap-1 text-sm font-medium transition-colors ${
                         isProgramActive ? "text-[#A3C544] nav-link-active" : "text-white/90 hover:text-white"
                       }`}
                     >
@@ -122,7 +189,7 @@ export default function Navbar() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className={`nav-link text-lg font-medium transition-colors ${
+                    className={`nav-link text-sm font-medium transition-colors ${
                       isActive ? "text-[#A3C544] nav-link-active" : "text-white/90 hover:text-white"
                     }`}
                   >
@@ -135,13 +202,7 @@ export default function Navbar() {
           </ul>
 
           <div className="flex items-center gap-2">
-            <button
-              onClick={() => setSearchOpen(!searchOpen)}
-              aria-label="Search"
-              className="shrink-0 w-9 h-9 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors"
-            >
-              <Search size={18} className="text-white/90" />
-            </button>
+            {accountButton}
 
             <button
               onClick={() => setMenuOpen(true)}
@@ -188,7 +249,7 @@ export default function Navbar() {
                   <button
                     onClick={() => setMobileProgramOpen(!mobileProgramOpen)}
                     aria-expanded={mobileProgramOpen}
-                    className={`w-full flex items-center justify-between py-3 px-3 rounded-xl text-xl font-medium transition-colors ${
+                    className={`w-full flex items-center justify-between py-3 px-3 rounded-xl text-base font-medium transition-colors ${
                       isProgramActive ? "text-[#A3C544]" : "text-white/90 hover:text-white"
                     }`}
                   >
@@ -205,7 +266,7 @@ export default function Navbar() {
                         key={sub.href}
                         href={sub.href}
                         onClick={() => setMenuOpen(false)}
-                        className={`block py-2.5 px-3 rounded-lg text-base transition-colors ${
+                        className={`block py-2.5 px-3 rounded-lg text-sm transition-colors ${
                           pathname === sub.href ? "text-[#A3C544]" : "text-white/70 hover:text-white"
                         }`}
                       >
@@ -222,7 +283,7 @@ export default function Navbar() {
                 <Link
                   href={item.href}
                   onClick={() => setMenuOpen(false)}
-                  className={`mobile-nav-link block py-3 px-3 rounded-xl text-xl font-medium transition-colors ${
+                  className={`mobile-nav-link block py-3 px-3 rounded-xl text-base font-medium transition-colors ${
                     isActive ? "text-[#A3C544]" : "text-white/90 hover:text-white"
                   }`}
                 >
@@ -235,6 +296,40 @@ export default function Navbar() {
 
         <div className="mt-auto px-6 pb-8">
           <div className="footer-divider mb-5" />
+
+          {session ? (
+            <div className="mb-5">
+              {isAdmin && (
+                <Link
+                  href="/dashboard"
+                  onClick={() => setMenuOpen(false)}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm text-[#13202C] mb-2"
+                  style={{ backgroundColor: "#A3C544" }}
+                >
+                  <LayoutDashboard size={16} />
+                  Dashboard
+                </Link>
+              )}
+              <button
+                onClick={() => signOut()}
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-full font-medium text-sm text-white/80 border border-white/15 hover:bg-white/10 transition-colors"
+              >
+                <LogOut size={16} />
+                Keluar ({session.user.name?.split(" ")[0]})
+              </button>
+            </div>
+          ) : (
+            <Link
+              href={`/auth/sign-in?redirect=${encodeURIComponent(pathname)}`}
+              onClick={() => setMenuOpen(false)}
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm text-[#13202C] mb-5"
+              style={{ backgroundColor: "#A3C544" }}
+            >
+              <LogIn size={16} />
+              Masuk
+            </Link>
+          )}
+
           <div className="flex items-center justify-between gap-3">
             {socialLinks.map(({ label, href, icon: Icon }) => (
               <Link
