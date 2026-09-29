@@ -1,73 +1,22 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { PageHeader } from "../_components/PageHeader";
+import { useInView } from "@/lib/hooks/use-in-view";
+import type { CintaLokalSummary } from "@/lib/types";
 
-interface Article {
-  slug: string;
-  title: string;
-  excerpt: string;
-  image: string;
-  date: string;
-  tags: string[];
-}
-
-export default function CintaLokalClient({ articles }: { articles: Article[] }) {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+export default function CintaLokalClient({ articles }: { articles: CintaLokalSummary[] }) {
+  const { ref: sectionRef, inView: visible } = useInView({ threshold: 0.1 });
 
   return (
-    <main className="relative w-full min-h-screen px-6 md:px-16 py-24">
+    <main className="relative w-full min-h-screen px-6 md:px-16 pt-36 pb-24">
       <div className="hero-fade-overlay" />
 
       <div className="max-w-6xl mx-auto">
-        <div className="mb-14">
-          <div className="relative flex items-center justify-center">
-            <Link
-              href="/"
-              aria-label="Kembali ke Beranda"
-              className="absolute left-0 inline-flex items-center justify-center w-8 h-8 rounded-full transition-transform hover:scale-105 mt-10"
-              style={{ backgroundColor: "#A3C544" }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#13202C"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M19 12H5" />
-                <path d="M12 19l-7-7 7-7" />
-              </svg>
-            </Link>
-
-            <h1 className="text-3xl md:text-5xl font-bold text-white mt-8">
-              Cinta Lokal
-            </h1>
-          </div>
-
-          <p className="mt-3 text-center text-white/70 text-sm md:text-base">
-            Seluruh riset dan cerita seputar Garut dari FORMAT ITB
-          </p>
-        </div>
+        <PageHeader
+          title="Cinta Lokal"
+          subtitle="Seluruh riset dan cerita seputar Garut dari FORMAT ITB"
+        />
 
         <div
           ref={sectionRef}

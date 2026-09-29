@@ -1,21 +1,27 @@
-import Hero from "@/app/components/Hero";
-import Kegiatan from "@/app/components/Kegiatan";
-import TentangKabinet from "@/app/components/TentangKabinet";
-import CintaLokal from "@/app/components/CintaLokal";
-import BeritaAgenda from "@/app/components/BeritaAgenda";
-import JelajahiFormat from "@/app/components/JelajahiFormat";
-import { getAllKegiatan } from "@/db/queries";
+import Hero from "./_components/Hero";
+import Kegiatan from "./_components/Kegiatan";
+import TentangKabinet from "./_components/TentangKabinet";
+import CintaLokal from "./_components/CintaLokal";
+import BeritaAgenda from "./_components/BeritaAgenda";
+import JelajahiFormat from "./_components/JelajahiFormat";
+import { getAllKegiatan, getCintaLokalSummaries, getAllBeasiswa } from "@/db/queries";
+
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const kegiatanList = await getAllKegiatan();
+  const [kegiatanList, articles, beasiswa] = await Promise.all([
+    getAllKegiatan(),
+    getCintaLokalSummaries(),
+    getAllBeasiswa(),
+  ]);
 
   return (
     <>
       <Hero />
       <Kegiatan kegiatanList={kegiatanList.slice(0, 4)} />
       <TentangKabinet />
-      <BeritaAgenda />
-      <CintaLokal />
+      <BeritaAgenda articles={articles} beasiswa={beasiswa} />
+      <CintaLokal articles={articles} />
       <JelajahiFormat />
     </>
   );

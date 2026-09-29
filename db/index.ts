@@ -1,8 +1,10 @@
 import { drizzle } from "drizzle-orm/libsql";
 import { createClient, type Client } from "@libsql/client";
 
+type Db = ReturnType<typeof drizzle>;
+
 let _client: Client | null = null;
-let _db: ReturnType<typeof drizzle> | null = null;
+let _db: Db | null = null;
 
 function getClient() {
   if (!_client) {
@@ -14,15 +16,13 @@ function getClient() {
   return _client;
 }
 
-function getDb() {
+function getDb(): Db {
   if (!_db) {
     _db = drizzle(getClient());
   }
   return _db;
 }
 
-export const db: ReturnType<typeof drizzle> = new Proxy({} as ReturnType<typeof drizzle>, {
-  get(_, prop) {
-    return (getDb() as any)[prop];
-  },
+export const db: Db = new Proxy({} as Db, {
+  get: (_target, prop) => Reflect.get(getDb(), prop),
 });

@@ -1,16 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { X } from "lucide-react";
-
-interface GaleriAlbum {
-  slug: string;
-  number: string;
-  title: string;
-  subtitle: string;
-  images: string[];
-}
+import { PageHeader } from "../_components/PageHeader";
+import type { GaleriAlbum } from "@/lib/types";
 
 export default function GaleriClient({ galeriAlbums }: { galeriAlbums: GaleriAlbum[] }) {
   const [activeSlug, setActiveSlug] = useState(galeriAlbums[0]?.slug);
@@ -49,49 +42,16 @@ export default function GaleriClient({ galeriAlbums }: { galeriAlbums: GaleriAlb
   }, []);
 
   return (
-    <main className="relative w-full min-h-screen px-6 md:px-16 py-24">
+    <main className="relative w-full min-h-screen px-6 md:px-16 pt-36 pb-24">
       <div className="hero-fade-overlay" />
 
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="mb-14">
-          <div className="relative flex items-center justify-center">
-            <Link
-              href="/"
-              aria-label="Kembali ke Beranda"
-              className="absolute left-0 inline-flex items-center justify-center w-8 h-8 rounded-full transition-transform hover:scale-105 mt-10"
-              style={{ backgroundColor: "#A3C544" }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#13202C"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M19 12H5" />
-                <path d="M12 19l-7-7 7-7" />
-              </svg>
-            </Link>
-
-            <h1 className="text-3xl md:text-5xl font-bold text-white mt-8">
-              Galeri
-            </h1>
-          </div>
-
-          <p className="mt-3 text-center text-white/70 text-sm md:text-base">
-            Forum Mahasiswa Garut ITB
-          </p>
-        </div>
+        <PageHeader title="Galeri" subtitle="Forum Mahasiswa Garut ITB" />
 
         <div className="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-10">
           {/* Sidebar */}
           <aside className="hidden md:block">
-            <div className="galeri-sidebar sticky top-28">
+            <div className="galeri-sidebar lg-glass-subtle lg-r-lg sticky top-28 px-5 py-6">
               <span className="galeri-sidebar-eyebrow">Album Kegiatan</span>
               <p className="galeri-sidebar-hint">Lompat ke bagian di bawah.</p>
 
@@ -123,10 +83,10 @@ export default function GaleriClient({ galeriAlbums }: { galeriAlbums: GaleriAlb
                 className="scroll-mt-28"
               >
                 <span className="galeri-album-number">{album.number}</span>
-                <h2 className="text-2xl md:text-4xl font-bold text-white mt-2">
+                <h2 className="text-2xl md:text-3xl font-bold text-white mt-2">
                   {album.title}
                 </h2>
-                <p className="mt-2 text-white/60 text-sm md:text-base">
+                <p className="mt-2 text-white/70 text-sm md:text-base">
                   {album.subtitle}
                 </p>
 
@@ -137,7 +97,7 @@ export default function GaleriClient({ galeriAlbums }: { galeriAlbums: GaleriAlb
                     <button
                       key={i}
                       onClick={() => setLightbox(img)}
-                      className="galeri-thumb rounded-xl overflow-hidden aspect-square group"
+                      className="galeri-thumb overflow-hidden aspect-square group"
                     >
                       <img
                         src={img}

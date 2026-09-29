@@ -1,13 +1,12 @@
 import { getAllMerchProducts } from "@/db/queries";
-import { getCmsResource } from "@/lib/cms-config";
-import { requireSection, toPlain } from "@/lib/dashboard-guard";
-import ResourceManager from "@/app/dashboard/components/ResourceManager";
+import { renderCmsResource } from "../_lib/render-cms-resource";
 
 export const dynamic = "force-dynamic";
 
-export default async function MerchAdminPage() {
-  await requireSection("merch");
-  const config = getCmsResource("merch")!;
-  const rows = toPlain(await getAllMerchProducts());
-  return <ResourceManager config={config} rows={rows} />;
+export default function MerchAdminPage() {
+  return renderCmsResource({
+    section: "merch",
+    resource: "merch",
+    load: getAllMerchProducts,
+  });
 }

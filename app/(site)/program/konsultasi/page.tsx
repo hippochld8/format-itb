@@ -1,46 +1,23 @@
-import Link from "next/link";
 import { MessageCircle, GraduationCap } from "lucide-react";
 import { topikList, faqList } from "@/lib/konsultasi";
 import { getAllKonselor } from "@/db/queries";
+import { PageHeader } from "../../_components/PageHeader";
 
 export const dynamic = "force-dynamic";
 
 export default async function KonsultasiPage() {
   const konselorList = await getAllKonselor();
   return (
-    <main className="relative w-full min-h-screen px-6 md:px-16 py-24">
+    <main className="relative w-full min-h-screen px-6 md:px-16 pt-36 pb-24">
       <div className="hero-fade-overlay" />
 
       <div className="max-w-5xl mx-auto flex flex-col gap-14">
-        {/* Header */}
-        <div>
-          <div className="relative flex items-center justify-center">
-            <Link
-              href="/"
-              aria-label="Kembali ke Beranda"
-              className="absolute left-0 inline-flex items-center justify-center w-8 h-8 rounded-full transition-transform hover:scale-105 mt-10"
-              style={{ backgroundColor: "#A3C544" }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#13202C"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M19 12H5" />
-                <path d="M12 19l-7-7 7-7" />
-              </svg>
-            </Link>
+        <PageHeader
+          title="Konsultasi"
+          subtitle="Mau masuk ITB tapi masih bingung? Ngobrol langsung sama Baraya FORMAT — kakak kelas asal Garut yang udah ngalamin sendiri."
+          className=""
+        />
 
-            <h1 className="text-3xl md:text-5xl font-bold text-white mt-8">
-              Konsultasi
-            </h1>
-          </div>
 
           <p className="mt-3 text-center text-white/70 text-sm md:text-base max-w-xl mx-auto">
             Mau masuk ITB tapi masih bingung? Ngobrol langsung sama Baraya
@@ -49,9 +26,9 @@ export default async function KonsultasiPage() {
         </div>
 
         {/* Topik yang bisa ditanyakan */}
-        <div className="kegiatan-glass rounded-3xl px-8 py-10 md:px-14 md:py-12">
+        <div className="kegiatan-glass lg-r-lg px-8 py-10 md:px-14 md:py-12">
           <span className="kabinet-eyebrow">Bisa Tanya Apa Aja</span>
-          <h2 className="text-xl md:text-2xl font-bold text-white mt-2 mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mt-2 mb-6">
             Topik Konsultasi
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -100,9 +77,9 @@ export default async function KonsultasiPage() {
         </div>
 
         {/* FAQ */}
-        <div className="kegiatan-glass rounded-3xl px-8 py-10 md:px-14 md:py-12">
+        <div className="kegiatan-glass lg-r-lg px-8 py-10 md:px-14 md:py-12">
           <span className="kabinet-eyebrow">Sering Ditanya</span>
-          <h2 className="text-xl md:text-2xl font-bold text-white mt-2 mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mt-2 mb-6">
             FAQ
           </h2>
           <div className="flex flex-col gap-5">
@@ -118,7 +95,6 @@ export default async function KonsultasiPage() {
             ))}
           </div>
         </div>
-      </div>
     </main>
   );
 }

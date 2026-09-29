@@ -1,7 +1,7 @@
-import Navbar from "../components/Navbar";
-import LoadingScreen from "../components/LoadingScreen";
-import PageTransition from "../components/PageTransition";
-import Footer from "../components/Footer";
+import Navbar from "./_components/Navbar";
+import LoadingScreen from "./_components/LoadingScreen";
+import PageTransition from "./_components/PageTransition";
+import Footer from "./_components/Footer";
 
 export default function SiteLayout({
   children,
@@ -12,7 +12,7 @@ export default function SiteLayout({
     <>
       <LoadingScreen />
       <Navbar />
-      <main className="relative -top-16">
+      <main className="relative">
         <PageTransition>{children}</PageTransition>
       </main>
       <Footer />

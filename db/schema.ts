@@ -13,8 +13,9 @@ export const user = sqliteTable("user", {
     enum: [
       "superadmin",
       "admin-akademik",
+      "admin-riset",
+      "admin-dokumentasi",
       "admin-beasiswa",
-      "admin-konsultasi",
       "admin-merch",
       "user",
     ],
@@ -173,6 +174,7 @@ export const merchProduct = sqliteTable("merch_product", {
   image: text("image").notNull(),
   description: text("description").notNull(),
   sizes: text("sizes", { mode: "json" }).$type<string[]>(),
+  variants: text("variants", { mode: "json" }).$type<string[]>(),
 });
 
 // ===== TENTANG KAMI: Anggota Organogram =====
@@ -201,6 +203,7 @@ export type OrderItem = {
   name: string;
   price: number;
   size?: string;
+  variant?: string;
   qty: number;
 };
 
@@ -223,6 +226,35 @@ export const merchOrder = sqliteTable("merch_order", {
   })
     .notNull()
     .default("pending"),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+});
+
+// ===== AUDIT LOG (hanya terlihat superadmin) =====
+export interface AuditChange {
+  label: string;
+  old?: string;
+  new?: string;
+}
+
+export interface AuditLogDetail {
+  title: string;
+  changes?: AuditChange[];
+}
+
+export const auditLog = sqliteTable("audit_log", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  userId: text("user_id").notNull(),
+  userName: text("user_name").notNull(),
+  action: text("action", {
+    enum: ["create", "update", "delete", "role-change"],
+  }).notNull(),
+  resource: text("resource").notNull(),
+  itemId: text("item_id").notNull().default(""),
+  detail: text("detail", { mode: "json" })
+    .$type<AuditLogDetail>()
+    .notNull(),
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
     .$defaultFn(() => new Date()),

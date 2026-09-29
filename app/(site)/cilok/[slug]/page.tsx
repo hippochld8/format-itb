@@ -16,7 +16,7 @@ export default async function CintaLokalDetail({
   if (!article) notFound();
 
   return (
-    <article className="pt-32 md:pt-40 px-6 md:px-16 pb-24 min-h-screen">
+    <article className="pt-40 md:pt-48 px-6 md:px-16 pb-24 min-h-screen">
       <div className="max-w-3xl mx-auto">
         <Link href="/cilok" className="cilok-back-link">
           <ArrowLeft size={16} />

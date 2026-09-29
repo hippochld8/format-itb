@@ -1,5 +1,5 @@
 import { getAllMerchProducts } from "@/db/queries";
-import { shippingZones, WA_ADMIN_NUMBER, QRIS_IMAGE } from "@/lib/merch";
+import { shippingZones, WA_ADMIN_NUMBER, QRIS_IMAGE } from "@/lib/merch-config";
 import MerchClient from "./MerchClient";
 
 export const dynamic = "force-dynamic";
@@ -14,6 +14,7 @@ export default async function MerchPage() {
     image: p.image,
     description: p.description,
     sizes: p.sizes ?? undefined,
+    variants: p.variants ?? undefined,
   }));
 
   return (

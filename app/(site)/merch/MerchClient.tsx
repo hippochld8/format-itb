@@ -1,23 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { ShoppingBag, Plus, Minus, X, MapPin, Store, LogIn } from "lucide-react";
 import { useSession } from "@/lib/auth-client";
-import type { ShippingZone } from "@/lib/merch";
+import { removeLocalStorageItem, useLocalStorage } from "@/lib/hooks/use-local-storage";
+import { PageHeader } from "../_components/PageHeader";
+import type { Product, ShippingZone } from "@/lib/types";
 
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-  description: string;
-  sizes?: string[];
-}
+const CART_STORAGE_KEY = "format-merch-cart";
+
+// Id produk di database adalah integer; halaman merch sudah mengubahnya jadi
+// string sebelum diteruskan ke sini, supaya aman dipakai sebagai key cart.
+type MerchProduct = Omit<Product, "id"> & { id: string };
 
 interface CartItem {
   productId: string;
   size?: string;
+  variant?: string;
   qty: number;
 }
 
@@ -29,13 +29,13 @@ export default function MerchClient({
   waAdminNumber,
   qrisImage,
 }: {
-  products: Product[];
+  products: MerchProduct[];
   shippingZones: ShippingZone[];
   waAdminNumber: string;
   qrisImage: string;
 }) {
   const { data: session, isPending } = useSession();
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useLocalStorage<CartItem[]>(CART_STORAGE_KEY, []);
   const [cartOpen, setCartOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [loginPromptOpen, setLoginPromptOpen] = useState(false);
@@ -44,37 +44,25 @@ export default function MerchClient({
   const [shippingZoneId, setShippingZoneId] = useState<string>(shippingZones[0].id);
   const [buyerName, setBuyerName] = useState("");
   const [selectedSize, setSelectedSize] = useState<Record<string, string>>({});
+  const [selectedVariant, setSelectedVariant] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
 
-  // Load cart dari localStorage saat pertama mount
-  useEffect(() => {
-    const saved = localStorage.getItem("format-merch-cart");
-    if (saved) {
-      try {
-        setCart(JSON.parse(saved));
-      } catch {
-        // ignore
-      }
-    }
-  }, []);
-
-  // Simpan cart setiap berubah
-  useEffect(() => {
-    localStorage.setItem("format-merch-cart", JSON.stringify(cart));
-  }, [cart]);
-
-  const addToCart = (product: Product) => {
+  const addToCart = (product: MerchProduct) => {
     const size = selectedSize[product.id];
+    const variant = selectedVariant[product.id];
     setCart((prev) => {
       const existing = prev.find(
-        (item) => item.productId === product.id && item.size === size
+        (item) =>
+          item.productId === product.id &&
+          item.size === size &&
+          item.variant === variant
       );
       if (existing) {
         return prev.map((item) =>
           item === existing ? { ...item, qty: item.qty + 1 } : item
         );
       }
-      return [...prev, { productId: product.id, size, qty: 1 }];
+      return [...prev, { productId: product.id, size, variant, qty: 1 }];
     });
     setCartOpen(true);
   };
@@ -125,8 +113,9 @@ export default function MerchClient({
     }
     lines.push(``, `Rincian pesanan:`);
     cartDetails.forEach((item) => {
+      const option = [item.size, item.variant].filter(Boolean).join(" — ");
       lines.push(
-        `- ${item.product.name}${item.size ? ` (${item.size})` : ""} x${item.qty} = ${formatRupiah(item.product.price * item.qty)}`
+        `- ${item.product.name}${option ? ` (${option})` : ""} x${item.qty} = ${formatRupiah(item.product.price * item.qty)}`
       );
     });
     lines.push(``, `Subtotal barang: ${formatRupiah(subtotal)}`);
@@ -165,14 +154,12 @@ export default function MerchClient({
             name: item.product.name,
             price: item.product.price,
             size: item.size ?? undefined,
+            variant: item.variant ?? undefined,
             qty: item.qty,
           })),
-          subtotal,
-          shippingCost,
-          total,
           deliveryMethod,
           address: deliveryMethod === "kirim" ? address : null,
-          shippingZone: deliveryMethod === "kirim" ? selectedZone?.label : null,
+          shippingZoneId: deliveryMethod === "kirim" ? shippingZoneId : null,
         }),
       });
 
@@ -188,10 +175,9 @@ export default function MerchClient({
         "_blank"
       );
       setCheckoutOpen(false);
-      setCart([]);
+      removeLocalStorageItem(CART_STORAGE_KEY);
       setBuyerName("");
       setAddress("");
-      localStorage.removeItem("format-merch-cart");
     } catch {
       setSubmitting(false);
       alert("Terjadi kesalahan. Coba lagi ya.");
@@ -199,43 +185,11 @@ export default function MerchClient({
   };
 
   return (
-    <main className="relative w-full min-h-screen px-6 md:px-16 py-24">
+    <main className="relative w-full min-h-screen px-6 md:px-16 pt-36 pb-24">
       <div className="hero-fade-overlay" />
 
       <div className="max-w-6xl mx-auto">
-        <div className="mb-14">
-          <div className="relative flex items-center justify-center">
-            <Link
-              href="/"
-              aria-label="Kembali ke Beranda"
-              className="absolute left-0 inline-flex items-center justify-center w-8 h-8 rounded-full transition-transform hover:scale-105 mt-10"
-              style={{ backgroundColor: "#A3C544" }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#13202C"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M19 12H5" />
-                <path d="M12 19l-7-7 7-7" />
-              </svg>
-            </Link>
-
-            <h1 className="text-3xl md:text-5xl font-bold text-white mt-8">
-              Merch
-            </h1>
-          </div>
-
-          <p className="mt-3 text-center text-white/70 text-sm md:text-base">
-            Merchandise resmi FORMAT ITB
-          </p>
-        </div>
+        <PageHeader title="Merch" subtitle="Merchandise resmi FORMAT ITB" />
 
         {/* Grid produk */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -257,33 +211,71 @@ export default function MerchClient({
                 {formatRupiah(product.price)}
               </p>
 
-              {product.sizes && (
-                <div className="flex gap-1.5 mb-3 flex-wrap">
-                  {product.sizes.map((size) => (
-                    <button
-                      key={size}
-                      onClick={() =>
-                        setSelectedSize((prev) => ({ ...prev, [product.id]: size }))
-                      }
-                      className={`merch-size-btn ${
-                        selectedSize[product.id] === size ? "merch-size-btn-active" : ""
-                      }`}
-                    >
-                      {size}
-                    </button>
-                  ))}
+              {product.variants && (
+                <div className="mb-3">
+                  <p className="text-white/40 text-[11px] font-semibold uppercase tracking-wide mb-1.5">
+                    Tipe
+                  </p>
+                  <div className="flex gap-1.5 flex-wrap">
+                    {product.variants.map((variant) => (
+                      <button
+                        key={variant}
+                        onClick={() =>
+                          setSelectedVariant((prev) => ({ ...prev, [product.id]: variant }))
+                        }
+                        className={`merch-variant-btn ${
+                          selectedVariant[product.id] === variant ? "merch-variant-btn-active" : ""
+                        }`}
+                      >
+                        {variant}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
 
-              <button
-                onClick={() => addToCart(product)}
-                disabled={!!product.sizes && !selectedSize[product.id]}
-                className="merch-add-btn"
-              >
-                {product.sizes && !selectedSize[product.id]
-                  ? "Pilih ukuran dulu"
-                  : "Tambah ke Keranjang"}
-              </button>
+              {product.sizes && (
+                <div className="mb-3">
+                  <p className="text-white/40 text-[11px] font-semibold uppercase tracking-wide mb-1.5">
+                    Ukuran
+                  </p>
+                  <div className="flex gap-1.5 flex-wrap">
+                    {product.sizes.map((size) => (
+                      <button
+                        key={size}
+                        onClick={() =>
+                          setSelectedSize((prev) => ({ ...prev, [product.id]: size }))
+                        }
+                        className={`merch-size-btn ${
+                          selectedSize[product.id] === size ? "merch-size-btn-active" : ""
+                        }`}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {(() => {
+                const needsVariant = !!product.variants && !selectedVariant[product.id];
+                const needsSize = !!product.sizes && !selectedSize[product.id];
+                const isDisabled = needsVariant || needsSize;
+                const prompt = needsVariant
+                  ? "Pilih Tipe Dulu"
+                  : needsSize
+                    ? "Pilih Ukuran Dulu"
+                    : "";
+                return (
+                  <button
+                    onClick={() => addToCart(product)}
+                    disabled={isDisabled}
+                    className="merch-add-btn"
+                  >
+                    {isDisabled ? prompt : "Tambah ke Keranjang"}
+                  </button>
+                );
+              })()}
             </div>
           ))}
         </div>
@@ -334,6 +326,9 @@ export default function MerchClient({
                         </p>
                         {item.size && (
                           <p className="text-white/50 text-xs">Ukuran: {item.size}</p>
+                        )}
+                        {item.variant && (
+                          <p className="text-white/50 text-xs">Tipe: {item.variant}</p>
                         )}
                         <p className="text-[#A3C544] text-sm font-semibold">
                           {formatRupiah(item.product.price)}
@@ -414,8 +409,7 @@ export default function MerchClient({
 
             <Link
               href="/auth/sign-in?redirect=/merch"
-              className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium text-[#13202C] transition-transform hover:scale-105"
-              style={{ backgroundColor: "#A3C544" }}
+              className="lg-btn lg-btn-primary w-full px-6 py-3"
             >
               <LogIn size={16} />
               Masuk dengan Google

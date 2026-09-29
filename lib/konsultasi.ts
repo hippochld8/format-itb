@@ -1,52 +1,10 @@
-export interface Konselor {
-  id: string;
-  name: string;
-  prodi: string;
-  angkatan: string;
-  waNumber: string; // format: 628xxxxxxxxxx (tanpa +/spasi)
-  waMessage: string;
-}
-
-export const konselorList: Konselor[] = [
-  {
-    id: "1",
-    name: "Ganti Nama",
-    prodi: "Ganti Prodi",
-    angkatan: "2024",
-    waNumber: "6281234567890",
-    waMessage: "Halo kak, aku mau konsultasi soal masuk ITB",
-  },
-  {
-    id: "2",
-    name: "Ganti Nama",
-    prodi: "Ganti Prodi",
-    angkatan: "2024",
-    waNumber: "6281234567891",
-    waMessage: "Halo kak, aku mau konsultasi soal masuk ITB",
-  },
-  {
-    id: "3",
-    name: "Ganti Nama",
-    prodi: "Ganti Prodi",
-    angkatan: "2025",
-    waNumber: "6281234567892",
-    waMessage: "Halo kak, aku mau konsultasi soal masuk ITB",
-  },
-  {
-    id: "4",
-    name: "Ganti Nama",
-    prodi: "Ganti Prodi",
-    angkatan: "2025",
-    waNumber: "6281234567893",
-    waMessage: "Halo kak, aku mau konsultasi soal masuk ITB",
-  },
-];
-
+// Daftar konselor disimpan di database (tabel konselor) dan dikelola lewat
+// dashboard. File ini hanya menyimpan copy teks yang statis di halaman Konsultasi.
 export const topikList = [
   "Jalur masuk ITB (SNBP, SNBT, Mandiri)",
-  "Tips & strategi persiapan SNBP/SNBT",
+  "Tips dan strategi persiapan SNBP/SNBT",
   "Milih program studi yang cocok",
-  "Kehidupan kuliah & kos di Bandung",
+  "Kehidupan kuliah dan kos di Bandung",
   "Beasiswa dan biaya kuliah",
   "Organisasi dan kegiatan mahasiswa",
 ];

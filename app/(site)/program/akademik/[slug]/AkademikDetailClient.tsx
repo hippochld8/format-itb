@@ -21,7 +21,7 @@ export default function AkademikDetailClient({ course }: { course: Course }) {
   const [openChapter, setOpenChapter] = useState<number | null>(null);
 
   return (
-    <main className="relative w-full min-h-screen px-6 md:px-16 py-24">
+    <main className="relative w-full min-h-screen px-6 md:px-16 pt-36 pb-24">
       <div className="hero-fade-overlay" />
 
       <div className="max-w-3xl mx-auto">
@@ -40,10 +40,10 @@ export default function AkademikDetailClient({ course }: { course: Course }) {
         </div>
 
         {/* Materi per bab */}
-        <div className="cilok-detail-glass rounded-3xl px-6 py-8 md:px-10 md:py-10 mb-8">
+        <div className="cilok-detail-glass lg-r-lg px-6 py-8 md:px-10 md:py-10 mb-8">
           <span className="kabinet-eyebrow">Materi</span>
-          <h2 className="text-xl md:text-2xl font-bold text-white mt-2 mb-6">
-            Bab & Topik
+          <h2 className="text-2xl md:text-3xl font-bold text-white mt-2 mb-6">
+            Bab dan Topik
           </h2>
 
           <div className="flex flex-col gap-2">
@@ -83,9 +83,9 @@ export default function AkademikDetailClient({ course }: { course: Course }) {
         </div>
 
         {/* Tutor */}
-        <div className="cilok-detail-glass rounded-3xl px-6 py-8 md:px-10 md:py-10">
+        <div className="cilok-detail-glass lg-r-lg px-6 py-8 md:px-10 md:py-10">
           <span className="kabinet-eyebrow">Tutor</span>
-          <h2 className="text-xl md:text-2xl font-bold text-white mt-2 mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mt-2 mb-6">
             Tutor {course.name}
           </h2>
 
@@ -95,7 +95,7 @@ export default function AkademikDetailClient({ course }: { course: Course }) {
             </div>
             <div>
               <p className="text-white font-semibold">Ganti Nama Tutor</p>
-              <p className="text-white/50 text-sm">Jadwal & kontak menyusul</p>
+              <p className="text-white/50 text-sm">Jadwal dan kontak menyusul</p>
             </div>
           </div>
 

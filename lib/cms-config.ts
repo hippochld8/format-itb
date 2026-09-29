@@ -55,7 +55,7 @@ export const CMS_RESOURCES: CmsResourceConfig[] = [
   {
     resource: "kegiatan",
     title: "Kegiatan",
-    description: "Daftar kegiatan yang tampil di beranda & halaman Kegiatan.",
+    description: "Daftar kegiatan yang tampil di beranda dan halaman Kegiatan.",
     section: "kegiatan",
     idField: "id",
     fields: [
@@ -140,7 +140,7 @@ export const CMS_RESOURCES: CmsResourceConfig[] = [
   {
     resource: "akademik-bab",
     title: "Akademik — Bab Materi",
-    description: "Bab & link Google Drive per mata kuliah.",
+    description: "Bab dan link Google Drive per mata kuliah.",
     section: "akademik",
     idField: "id",
     fields: [
@@ -193,10 +193,11 @@ export const CMS_RESOURCES: CmsResourceConfig[] = [
     idField: "id",
     fields: [
       { key: "name", label: "Nama Produk", type: "text", required: true },
-      { key: "price", label: "Harga (Rp)", type: "number", required: true },
+      { key: "price", label: "Harga (Rp)", type: "number", required: true, help: "Boleh diisi 85000 atau 85.000" },
       { key: "image", label: "Gambar", type: "image", required: true },
       { key: "description", label: "Deskripsi", type: "textarea", required: true, textareaRows: 3 },
       { key: "sizes", label: "Ukuran", type: "list", help: "Pisahkan dengan koma (kosongkan jika tidak ada)" },
+      { key: "variants", label: "Tipe/Varian", type: "list", help: "Opsional. Contoh: Pose 1, Pose 2, Pose 3 (pisahkan dengan koma)" },
     ],
     listColumns: ["name", "price", "image"],
     imageKey: "image",
@@ -225,7 +226,7 @@ export const CMS_RESOURCES: CmsResourceConfig[] = [
   {
     resource: "tentang-kami",
     title: "Tentang Kami — Pengurus",
-    description: "Nama & foto pengurus. Struktur posisi tidak bisa ditambah/hapus.",
+    description: "Nama dan foto pengurus. Struktur posisi tidak bisa ditambah/hapus.",
     section: "tentang-kami",
     idField: "roleKey",
     allowCreate: false,

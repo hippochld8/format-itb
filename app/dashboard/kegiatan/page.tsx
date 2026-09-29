@@ -1,13 +1,12 @@
 import { getAllKegiatan } from "@/db/queries";
-import { getCmsResource } from "@/lib/cms-config";
-import { requireSection, toPlain } from "@/lib/dashboard-guard";
-import ResourceManager from "@/app/dashboard/components/ResourceManager";
+import { renderCmsResource } from "../_lib/render-cms-resource";
 
 export const dynamic = "force-dynamic";
 
-export default async function KegiatanAdminPage() {
-  await requireSection("kegiatan");
-  const config = getCmsResource("kegiatan")!;
-  const rows = toPlain(await getAllKegiatan());
-  return <ResourceManager config={config} rows={rows} />;
+export default function KegiatanAdminPage() {
+  return renderCmsResource({
+    section: "kegiatan",
+    resource: "kegiatan",
+    load: getAllKegiatan,
+  });
 }

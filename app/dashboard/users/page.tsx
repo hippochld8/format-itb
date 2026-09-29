@@ -2,8 +2,8 @@ import { db } from "@/db";
 import { user } from "@/db/schema";
 import { asc } from "drizzle-orm";
 import { requireSection, toPlain } from "@/lib/dashboard-guard";
-import { type Role } from "@/lib/permissions";
-import UsersManager from "@/app/dashboard/components/UsersManager";
+import { normalizeRole } from "@/lib/permissions";
+import UsersManager from "@/app/dashboard/_components/UsersManager";
 
 export const dynamic = "force-dynamic";
 
@@ -18,7 +18,7 @@ export default async function UsersAdminPage() {
         name: u.name,
         email: u.email,
         image: u.image,
-        role: (u.role ?? "user") as Role,
+        role: normalizeRole(u.role),
       }))}
       currentUserId={session.user.id}
     />
